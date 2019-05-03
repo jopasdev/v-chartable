@@ -1,0 +1,21 @@
+<div>
+  <div class="row">
+    <div class="column left">
+      <h3>Table</h3>
+      <div style="overflow-x:auto;">
+        <table>
+          <tr v-for="(line, index) in lines" :key="index">
+            <td :class="{ selected: line.selected }" @click="selectPoint(index)">
+              {{ line.text }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="column center"></div>
+    <div class="column right">
+      <h3>Plot</h3>
+      <plot ref="predictPlot" :chart="chart" :lines="lines" @select-line="selectLine"/>
+    </div>
+  </div>
+</div>

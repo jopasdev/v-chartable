@@ -1,6 +1,6 @@
 {
-  "name": "reactive-plot2",
-  "short_name": "reactive-plot2",
+  "name": "plot",
+  "short_name": "plot",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",

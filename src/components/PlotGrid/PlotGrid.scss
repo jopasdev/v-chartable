@@ -1,0 +1,32 @@
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 5px;
+  color: #878e88;
+}
+
+tr:hover {
+  background-color: #ffffff;
+  // color: rgb(0, 0, 0);
+}
+
+td.selected {
+  background-color: #ffffff;
+}

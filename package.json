@@ -1,5 +1,5 @@
 {
-  "name": "reactive-plot2",
+  "name": "plot",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,11 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@statnett/vue-plotly": "^0.3.2",
+    "axios": "^0.18.0",
     "core-js": "^2.6.5",
+    "plotly.js": "^1.47.4",
+    "plotly.js-dist": "^1.47.4",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
