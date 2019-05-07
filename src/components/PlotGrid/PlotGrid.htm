@@ -1,21 +1,21 @@
 <div>
   <div class="row">
-    <div class="column left">
+    <div class="column">
       <h3>Table</h3>
-      <div style="overflow-x:auto;">
+      <div class="left">
         <table>
-          <tr v-for="(line, index) in lines" :key="index">
-            <td :class="{ selected: line.selected }" @click="selectPoint(index)">
-              {{ line.text }}
+          <tr v-for="(line, index) in lines" :class="{ selected: line.selected }">
+            <td  @click="selectPoint(index)">
+              {{ index }}. {{ line.text }}
             </td>
           </tr>
         </table>
       </div>
     </div>
-    <div class="column center"></div>
-    <div class="column right">
+    <div class="column">
       <h3>Plot</h3>
-      <plot ref="predictPlot" :chart="chart" :lines="lines" @select-line="selectLine"/>
+      <plot ref="predictPlot" :chart="chart" :lines="lines" :line="line" @select-lines="selectLines"/>
+      <button type="button" @click="resetSelection">Reset Selection</button>
     </div>
   </div>
 </div>

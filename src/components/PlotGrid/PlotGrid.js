@@ -11,19 +11,28 @@ export default {
   data () {
     return {
       chart: null,
-      lines: []
+      lines: [],
+      line: null
     }
   },
   mounted () {
     this.updatePoints()
   },
   methods: {
-    selectLine (index) {
-      this.lines[index].selected = !this.lines[index].selected
+    selectLines (indices) {
+      if (indices.length === 1) {
+        this.lines[indices[0]].selected = !this.lines[indices[0]].selected
+      } else {
+        indices.forEach(i => (this.lines[i].selected = true))
+      }
     },
     selectPoint (index) {
       this.lines[index].selected = !this.lines[index].selected
-      this.$refs.predictPlot.selectPoint(index, this.lines[index].selected)
+      this.line = this.lines[index]
+    },
+    resetSelection () {
+      this.lines.forEach(line => (line.selected = false))
+      this.$refs.predictPlot.resetPlotSelection()
     },
     updatePoints () {
       this.chart = {
@@ -33,17 +42,15 @@ export default {
             x: [],
             text: [],
             mode: 'markers',
-            type: 'scatter',
-            marker: { color: [] }
+            type: 'scatter'
           }
         ]
       }
-      for (let p of points) {
-        this.chart.traces[0].x.push(p[0])
-        this.chart.traces[0].y.push(p[1])
-        this.chart.traces[0].marker.color.push('steelblue')
-        this.chart.traces[0].text.push('Point: ' + p)
-        this.lines.push({ text: p, selected: false })
+      for (let i = 0; i < points.length; i++) {
+        this.chart.traces[0].x.push(points[i][0])
+        this.chart.traces[0].y.push(points[i][1])
+        this.chart.traces[0].text.push('Point: ' + points[i])
+        this.lines.push({ index: i, text: points[i], selected: false })
       }
     }
   }
