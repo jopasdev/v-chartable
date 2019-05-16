@@ -1,12 +1,11 @@
 // import axios from 'axios'
-import Plot from '@/components/Plot/Plot.vue'
-// import Grid from '@/components/Grid/Grid.vue'
+import PredictPlot from '@/components/PredictPlot/PredictPlot.vue'
 
 import { points } from './2dArray.js'
 
 export default {
   components: {
-    Plot
+    PredictPlot
   },
   data () {
     return {

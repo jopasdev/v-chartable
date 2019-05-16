@@ -1,0 +1,29 @@
+<div>
+  <div class="row">
+    <div class="column">
+      <button v-if="showLeft" class="arrow" @click="scroll(-20)">
+        <
+      </button>
+      <button v-if="showRight" class="arrow" @click="scroll(20)">
+        >
+      </button>
+      <div class="left container" ref="container">
+        <table>
+          <tr v-for="line in lines" :class="{ selected: line.selected }">
+            <td @click="selectLineAndPoint(line)">{{ line.text }}</td>
+          </tr>
+        </table>
+      </div>
+      <!-- <div class="actions">
+        <button class="primary" @click="clearSelection">
+          Clear Selection
+        </button>
+      </div> -->
+    </div>
+    <div class="column">
+      <div ref="predictPlot">
+        <!-- Plotly chart will be drawn inside this DIV -->
+      </div>
+    </div>
+  </div>
+</div>
