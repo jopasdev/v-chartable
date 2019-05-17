@@ -34,10 +34,11 @@ export default {
         this.chart.traces[0].text = []
         this.chart.traces[0].marker = {}
         this.lines = []
+        debugger
         for (let i = 0; i < this.points.length; i++) {
           this.chart.traces[0].x.push(this.points[i][0])
           this.chart.traces[0].y.push(this.points[i][1])
-          let description = this.descriptions[i][0].split(',')
+          let description = this.descriptions[i].split(',')
           if (description.length > MAX_FEATURES_IN_PLOT_DESCRIPTION) {
             description =
               description
@@ -49,7 +50,7 @@ export default {
           this.chart.traces[0].text.push(description)
           this.lines.push({
             index: i,
-            text: this.descriptions[i][0],
+            text: this.descriptions[i],
             selected: false
           })
         }
