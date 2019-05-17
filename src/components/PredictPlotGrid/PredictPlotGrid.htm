@@ -1,11 +1,11 @@
 <div>
   <div class="row">
     <div class="column">
-      <button v-if="showLeft" class="arrow" @click="scroll(-20)">
-        <
+      <button :disabled="!scroll.showLeft" class="arrow" @click="toScroll(-20)">
+        &lt;
       </button>
-      <button v-if="showRight" class="arrow" @click="scroll(20)">
-        >
+      <button :disabled="!scroll.showRight" class="arrow" @click="toScroll(20)">
+        &gt;
       </button>
       <div class="left container" ref="container">
         <table>
@@ -14,11 +14,11 @@
           </tr>
         </table>
       </div>
-      <!-- <div class="actions">
+      <div class="actions">
         <button class="primary" @click="clearSelection">
           Clear Selection
         </button>
-      </div> -->
+      </div>
     </div>
     <div class="column">
       <div ref="predictPlot">

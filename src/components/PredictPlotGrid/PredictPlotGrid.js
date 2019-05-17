@@ -2,7 +2,6 @@ import Plotly from 'plotly.js-dist'
 
 const COLOR_STEELBLUE = 'steelblue'
 const COLOR_ORANGERED = 'orangered'
-const MAX_FEATURES_IN_PLOT_DESCRIPTION = 20
 
 export default {
   props: ['points', 'descriptions'],
@@ -21,9 +20,11 @@ export default {
         ]
       },
       lines: [],
-      width: 0,
-      showLeft: false,
-      showRight: true
+      scroll: {
+        width: 0,
+        showLeft: false,
+        showRight: true
+      }
     }
   },
   watch: {
@@ -34,20 +35,9 @@ export default {
         this.chart.traces[0].text = []
         this.chart.traces[0].marker = {}
         this.lines = []
-        debugger
         for (let i = 0; i < this.points.length; i++) {
           this.chart.traces[0].x.push(this.points[i][0])
           this.chart.traces[0].y.push(this.points[i][1])
-          let description = this.descriptions[i].split(',')
-          if (description.length > MAX_FEATURES_IN_PLOT_DESCRIPTION) {
-            description =
-              description
-                .slice(0, MAX_FEATURES_IN_PLOT_DESCRIPTION)
-                .join('<br>') + '<br>...'
-          } else {
-            description = description.slice().join('<br>')
-          }
-          this.chart.traces[0].text.push(description)
           this.lines.push({
             index: i,
             text: this.descriptions[i],
@@ -61,9 +51,6 @@ export default {
           { hovermode: 'closest', hoverdistance: 10 },
           { responsive: true, scrollZoom: true, displaylogo: false }
         )
-        this.$refs.predictPlot.on('plotly_doubleclick', () => {
-          this.clearSelection()
-        })
         this.$refs.predictPlot.on('plotly_click', eventData => {
           if (eventData.points.length > 0) {
             let colors = eventData.points[0].data.marker.color
@@ -129,25 +116,23 @@ export default {
       this.chart.traces[0].x.forEach((v, i, a) => (colors[i] = COLOR_STEELBLUE))
       return colors
     },
-    scroll: function (step) {
+    toScroll (step) {
       this.$refs.container.scrollLeft += step
       switch (this.$refs.container.scrollLeft) {
         case 0:
-          this.showLeft = false
+          this.scroll.showLeft = false
           break
-        case this.width:
-          this.showRight = false
+        case this.scroll.width:
+          this.scroll.showRight = false
           break
         default:
-          this.showLeft = true
-          this.showRight = true
+          this.scroll.showLeft = true
+          this.scroll.showRight = true
       }
     }
   },
-  mounted: function () {
-    this.$nextTick(function () {
-      this.width =
-        this.$refs.container.scrollWidth - this.$refs.container.clientWidth
-    })
+  mounted () {
+    this.scroll.width =
+      this.$refs.container.scrollWidth - this.$refs.container.clientWidth
   }
 }
