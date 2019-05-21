@@ -13,13 +13,11 @@ export default {
             y: [],
             x: [],
             mode: 'markers',
-            type: 'scatter',
-            text: [],
-            hoverinfo: 'text'
+            type: 'scatter'
           }
         ]
       },
-      lines: [],
+      selectedLines: [],
       scroll: {
         width: 0,
         showLeft: false,
@@ -30,20 +28,14 @@ export default {
   watch: {
     points: {
       handler: function () {
+        this.selectedLines = []
         this.chart.traces[0].x = []
         this.chart.traces[0].y = []
-        this.chart.traces[0].text = []
         this.chart.traces[0].marker = {}
-        this.lines = []
-        for (let i = 0; i < this.points.length; i++) {
-          this.chart.traces[0].x.push(this.points[i][0])
-          this.chart.traces[0].y.push(this.points[i][1])
-          this.lines.push({
-            index: i,
-            text: this.descriptions[i],
-            selected: false
-          })
-        }
+        this.points.forEach(point => {
+          this.chart.traces[0].x.push(point[0])
+          this.chart.traces[0].y.push(point[1])
+        })
         this.chart.traces[0].marker = { color: this.initialPointsColors() }
         Plotly.newPlot(
           this.$refs.predictPlot,
@@ -69,7 +61,7 @@ export default {
           if (eventData.points.length > 0) {
             let colors = eventData.points[0].data.marker.color
             let points = []
-            eventData.points.forEach(function (point) {
+            eventData.points.forEach(point => {
               points.push(point.pointNumber)
               colors[point.pointNumber] = COLOR_ORANGERED
             })
@@ -86,22 +78,31 @@ export default {
     }
   },
   methods: {
-    selectLineAndPoint (line) {
-      this.changeSelectedLine(line.index)
+    selectPoint (index) {
       let colors = this.chart.traces[0].marker.color
-      colors[line.index] = line.selected ? COLOR_ORANGERED : COLOR_STEELBLUE
+      colors[index] = this.selectedLines.includes(index)
+        ? COLOR_ORANGERED
+        : COLOR_STEELBLUE
       Plotly.restyle(this.$refs.predictPlot, {
         marker: { color: colors }
       })
     },
     changeSelectedLine (index) {
-      this.lines[index].selected = !this.lines[index].selected
+      let idx = this.selectedLines.indexOf(index)
+      if (idx > -1) {
+        this.selectedLines.splice(idx, 1)
+      } else {
+        this.selectedLines.push(index)
+      }
+      this.$refs.predictTable.rows[index].scrollIntoView()
     },
     selectLines (indices) {
-      indices.forEach(i => (this.lines[i].selected = true))
+      indices.forEach(i => {
+        this.selectedLines.push(i)
+      })
     },
     clearSelection () {
-      this.lines.forEach(line => (line.selected = false))
+      this.selectedLines = []
       Plotly.restyle(this.$refs.predictPlot, {
         marker: { color: this.initialPointsColors() }
       })
@@ -113,12 +114,14 @@ export default {
     },
     initialPointsColors () {
       let colors = []
-      this.chart.traces[0].x.forEach((v, i, a) => (colors[i] = COLOR_STEELBLUE))
+      this.chart.traces[0].x.forEach((v, i, a) => {
+        colors[i] = COLOR_STEELBLUE
+      })
       return colors
     },
     toScroll (step) {
-      this.$refs.container.scrollLeft += step
-      switch (this.$refs.container.scrollLeft) {
+      this.$refs.predictTable.scrollLeft += step
+      switch (this.$refs.predictTable.scrollLeft) {
         case 0:
           this.scroll.showLeft = false
           break
@@ -133,6 +136,6 @@ export default {
   },
   mounted () {
     this.scroll.width =
-      this.$refs.container.scrollWidth - this.$refs.container.clientWidth
+      this.$refs.predictTable.scrollWidth - this.$refs.predictTable.clientWidth
   }
 }

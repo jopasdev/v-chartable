@@ -1,60 +1,80 @@
+@import "~@/assets/scrollable";
+
+.scrolling-wrapper {
+  @include scrollable();
+  overflow-x: auto;
+  overflow-y: auto;
+  white-space: nowrap;
+  height: 450px;
+  // width: 400px;
+  background: white;
+}
+
+// ::-webkit-scrollbar-track {
+//   background: red;
+//   width: 5px;
+//   // height: 450px;
+//   border-radius: 4.5px;
+//   background: var(--turquoise-blue);
+// }
+
 // @import "~@/styles/partials/mixins";
 // @import "~@/styles/partials/variables";
 
-.column {
-  float: left;
-  width: 50%;
-}
+// .column {
+//   float: left;
+//   width: 50%;
+// }
 
-.left {
-  // @include scrollable();
-  white-space: nowrap;
-  overflow-y: scroll;
-  overflow-x: scroll;
-  height: 450px;
-  background-color: black;
-  padding: 10px;
-}
+// .left {
+//   // @include scrollable();
+//   white-space: nowrap;
+//   overflow-y: scroll;
+//   overflow-x: scroll;
+//   height: 450px;
+//   background-color: black;
+//   padding: 10px;
+// }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+// /* Clear floats after the columns */
+// .row:after {
+//   content: "";
+//   display: table;
+//   clear: both;
+// }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-  cursor: pointer;
-}
+// table {
+//   border-collapse: collapse;
+//   width: 100%;
+//   cursor: pointer;
+// }
 
-th,
-td {
-  text-align: left;
-  font-size: small;
-}
+// th,
+// td {
+//   text-align: left;
+//   font-size: small;
+// }
 
-tr:hover {
-  background-color: #5abdd4 !important;
-}
+// tr:hover {
+//   background-color: #5abdd4 !important;
+// }
 
-tr.selected {
-  background-color: #346d89;
-}
+// tr.selected {
+//   background-color: #346d89;
+// }
 
-.actions {
-  padding-top: 15px;
-  .md-button {
-    margin: 0 0 10px;
-    border: 2px solid #25e2f5;
-    color: #25e2f5;
-    &[disabled] {
-      opacity: 0.5;
-    }
-  }
-}
+// .actions {
+//   padding-top: 15px;
+//   .md-button {
+//     margin: 0 0 10px;
+//     border: 2px solid #25e2f5;
+//     color: #25e2f5;
+//     &[disabled] {
+//       opacity: 0.5;
+//     }
+//   }
+// }
 
-.container {
-  overflow-x: hidden;
-}
+// .container {
+//   overflow-x: hidden;
+// }

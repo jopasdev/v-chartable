@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+:root {
+  --light-grey-blue: #9db5ce;
+  --dark-blue-grey: #0e1c2b;
+  --dark-slate-blue: #173654;
+  --turquoise-blue: #06bdcf;
+}
+
+// $pink: #ff8080;
+// $primary: $pink;
+// $family-sans-serif: "Helvetica", "Arial", sans-serif;
+$table-row-hover-background-color: #5cc76d52;
+$table-cell-border-width: 0px;
+// $table-cell-border: 1px solid white;
+@import "~bulma/bulma";

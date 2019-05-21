@@ -1,29 +1,56 @@
 <div>
-  <div class="row">
-    <div class="column">
-      <button :disabled="!scroll.showLeft" class="arrow" @click="toScroll(-20)">
+  <div class="columns">
+    <!-- <div class="container"><h3>Dataset Table</h3></div> -->
+    <div class="column scrolling-wrapper">
+      <button
+        :disabled="!scroll.showLeft"
+        class="arrow is-pulled-left"
+        @click="toScroll(-20)"
+      >
         &lt;
       </button>
-      <button :disabled="!scroll.showRight" class="arrow" @click="toScroll(20)">
+      <button
+        :disabled="!scroll.showRight"
+        class="arrow is-pulled-right"
+        @click="toScroll(20)"
+      >
         &gt;
       </button>
-      <div class="left container" ref="container">
-        <table>
-          <tr v-for="line in lines" :class="{ selected: line.selected }">
-            <td @click="selectLineAndPoint(line)">{{ line.text }}</td>
+      <table
+        ref="predictTable"
+        class="table is-narrow is-hoverable is-fullwidth"
+      >
+        <!-- <thead>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>Header</td>
           </tr>
-        </table>
-      </div>
-      <div class="actions">
-        <button class="primary" @click="clearSelection">
-          Clear Selection
-        </button>
-      </div>
+        </thead> -->
+        <tbody>
+          <tr v-for="(line, index) in descriptions">
+            <td>
+              <input
+                :value="index"
+                type="checkbox"
+                @change="selectPoint(index)"
+                v-model="selectedLines"
+              />
+            </td>
+            <td v-for="feature in line.split(',')">
+              {{ feature }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
     <div class="column">
       <div ref="predictPlot">
         <!-- Plotly chart will be drawn inside this DIV -->
       </div>
+      <button class="button is-primary is-outlined" @click="clearSelection">
+        Clear Selection
+      </button>
     </div>
   </div>
 </div>
