@@ -2,48 +2,35 @@
   <div class="columns">
     <!-- <div class="container"><h3>Dataset Table</h3></div> -->
     <div class="column scrolling-wrapper">
-      <button
-        :disabled="!scroll.showLeft"
-        class="arrow is-pulled-left"
-        @click="toScroll(-20)"
-      >
-        &lt;
-      </button>
-      <button
-        :disabled="!scroll.showRight"
-        class="arrow is-pulled-right"
-        @click="toScroll(20)"
-      >
-        &gt;
-      </button>
-      <table
-        ref="predictTable"
-        class="table is-narrow is-hoverable is-fullwidth"
-      >
-        <!-- <thead>
+      <div>
+        <table
+          ref="predictTable"
+          class="table is-narrow is-hoverable is-fullwidth"
+        >
+          <!-- <thead>
           <tr>
             <td><input type="checkbox" /></td>
             <td>Header</td>
           </tr>
         </thead> -->
-        <tbody>
-          <tr v-for="(line, index) in descriptions">
-            <td>
-              <input
-                :value="index"
-                type="checkbox"
-                @change="selectPoint(index)"
-                v-model="selectedLines"
-              />
-            </td>
-            <td v-for="feature in line.split(',')">
-              {{ feature }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <tbody>
+            <tr v-for="(line, index) in descriptions">
+              <td>
+                <input
+                  :value="index"
+                  type="checkbox"
+                  @change="selectIndex(index)"
+                  v-model="indices"
+                />
+              </td>
+              <td v-for="feature in line.split(',')">
+                {{ feature }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-
     <div class="column">
       <div ref="predictPlot">
         <!-- Plotly chart will be drawn inside this DIV -->
@@ -53,4 +40,5 @@
       </button>
     </div>
   </div>
+  <features :indices="indices"/>
 </div>

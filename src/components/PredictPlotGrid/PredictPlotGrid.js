@@ -1,9 +1,13 @@
 import Plotly from 'plotly.js-dist'
+import Features from '@/components/Features/Features.vue'
 
 const COLOR_STEELBLUE = 'steelblue'
 const COLOR_ORANGERED = 'orangered'
 
 export default {
+  components: {
+    Features
+  },
   props: ['points', 'descriptions'],
   data () {
     return {
@@ -17,18 +21,21 @@ export default {
           }
         ]
       },
-      selectedLines: [],
-      scroll: {
-        width: 0,
-        showLeft: false,
-        showRight: true
+      indices: [],
+      stats: {
+        mean: null,
+        median: null,
+        std_deviation: null,
+        correlation: null,
+        distribution: null,
+        image_url: null
       }
     }
   },
   watch: {
     points: {
       handler: function () {
-        this.selectedLines = []
+        this.indices = []
         this.chart.traces[0].x = []
         this.chart.traces[0].y = []
         this.chart.traces[0].marker = {}
@@ -60,27 +67,27 @@ export default {
         this.$refs.predictPlot.on('plotly_selected', eventData => {
           if (eventData.points.length > 0) {
             let colors = eventData.points[0].data.marker.color
-            let points = []
+            let indices = []
             eventData.points.forEach(point => {
-              points.push(point.pointNumber)
+              indices.push(point.pointNumber)
               colors[point.pointNumber] = COLOR_ORANGERED
             })
             Plotly.restyle(this.$refs.predictPlot, {
               marker: { color: colors }
             })
-            this.selectLines(points)
+            Plotly.restyle(this.$refs.predictPlot, { selectedpoints: [null] })
+            Plotly.relayout(this.$refs.predictPlot, { dragmode: 'zoom' })
+            this.selectIndices(indices)
           }
-          Plotly.restyle(this.$refs.predictPlot, { selectedpoints: [null] })
-          Plotly.relayout(this.$refs.predictPlot, { dragmode: 'zoom' })
         })
       },
       deep: true
     }
   },
   methods: {
-    selectPoint (index) {
+    selectIndex (index) {
       let colors = this.chart.traces[0].marker.color
-      colors[index] = this.selectedLines.includes(index)
+      colors[index] = this.indices.includes(index)
         ? COLOR_ORANGERED
         : COLOR_STEELBLUE
       Plotly.restyle(this.$refs.predictPlot, {
@@ -88,21 +95,19 @@ export default {
       })
     },
     changeSelectedLine (index) {
-      let idx = this.selectedLines.indexOf(index)
+      let idx = this.indices.indexOf(index)
       if (idx > -1) {
-        this.selectedLines.splice(idx, 1)
+        this.indices.splice(idx, 1)
       } else {
-        this.selectedLines.push(index)
+        this.indices.push(index)
       }
       this.$refs.predictTable.rows[index].scrollIntoView()
     },
-    selectLines (indices) {
-      indices.forEach(i => {
-        this.selectedLines.push(i)
-      })
+    selectIndices (points) {
+      this.indices = points
     },
     clearSelection () {
-      this.selectedLines = []
+      this.indices = []
       Plotly.restyle(this.$refs.predictPlot, {
         marker: { color: this.initialPointsColors() }
       })
@@ -118,24 +123,6 @@ export default {
         colors[i] = COLOR_STEELBLUE
       })
       return colors
-    },
-    toScroll (step) {
-      this.$refs.predictTable.scrollLeft += step
-      switch (this.$refs.predictTable.scrollLeft) {
-        case 0:
-          this.scroll.showLeft = false
-          break
-        case this.scroll.width:
-          this.scroll.showRight = false
-          break
-        default:
-          this.scroll.showLeft = true
-          this.scroll.showRight = true
-      }
     }
-  },
-  mounted () {
-    this.scroll.width =
-      this.$refs.predictTable.scrollWidth - this.$refs.predictTable.clientWidth
   }
 }

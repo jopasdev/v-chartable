@@ -7,7 +7,7 @@
 <script>
 // @ is an alias to /src
 import { points } from "@/assets/2dArray.js";
-import { descriptions } from "@/assets/descriptions.1.js";
+import { values } from "@/assets/descriptions.js";
 
 import PredictPlotGrid from "@/components/PredictPlotGrid/PredictPlotGrid.vue";
 
@@ -24,7 +24,7 @@ export default {
   },
   mounted() {
     this.points = points;
-    this.descriptions = descriptions;
+    this.descriptions = values;
   }
 };
 </script>

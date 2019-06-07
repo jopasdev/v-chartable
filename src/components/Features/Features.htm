@@ -1,0 +1,48 @@
+<div>
+  <div class="columns" style="color:white">
+    <div class="column">
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            <select v-model="atribute">
+              <option disabled value="">Select Feature</option>
+              <option v-for="(atribute, index) in atributes" :value="index">
+                {{ atribute }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="container"> -->
+      <table class="table is-narrow is-fullwidth">
+        <tr>
+          <td>Mean</td>
+          <td>{{ statistics.mean }}</td>
+        </tr>
+        <tr>
+          <td>Median</td>
+          <td>{{ statistics.median }}</td>
+        </tr>
+        <tr>
+          <td>Std Deviation</td>
+          <td>{{ statistics.std_deviation }}</td>
+        </tr>
+        <tr>
+          <td>Correlation</td>
+          <td>{{ statistics.correlation }}</td>
+        </tr>
+        <tr>
+          <td>Distribution</td>
+          <td>{{ statistics.distribution }}</td>
+        </tr>
+        <tr>
+          <td>Image URL</td>
+          <!-- <td>{{ statistics }}</td> -->
+        </tr>
+      </table>
+    </div>
+    <div class="column">
+      <!-- </div> -->
+    </div>
+  </div>
+</div>
