@@ -1,48 +1,86 @@
-<div>
-  <div class="columns" style="color:white">
-    <div class="column">
-      <div class="field">
-        <div class="control">
-          <div class="select">
-            <select v-model="atribute">
-              <option disabled value="">Select Feature</option>
-              <option v-for="(atribute, index) in atributes" :value="index">
-                {{ atribute }}
-              </option>
-            </select>
+<div class="tile">
+  <div class="tile is-parent is-vertical is-6">
+    <div class="tile is-child">
+      <div class="field is-horizontal">
+        <div class="field-body">
+          <div class="field is-narrow">
+            <div class="control">
+              <div class="select">
+                <select v-model="attribute_A">
+                  <option disabled value="">Attribute</option>
+                  <option
+                    v-for="(attribute_A, index) in attributes"
+                    :value="index"
+                  >
+                    {{ attribute_A }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field is-narrow">
+            <div class="control">
+              <div class="select">
+                <select :disabled="attribute_A === null" v-model="attribute_B">
+                  <option disabled value="">Target</option>
+                  <option
+                    v-for="(attribute_B, index) in attributes"
+                    :value="index"
+                  >
+                    {{ attribute_B }}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <!-- <div class="container"> -->
+    </div>
+    <div class="tile is-child">
       <table class="table is-narrow is-fullwidth">
+        <thead>
+          <tr>
+            <td>Description</td>
+            <td>Total</td>
+            <td>Selected</td>
+          </tr>
+        </thead>
         <tr>
           <td>Mean</td>
+          <td>{{ statistics_total.mean }}</td>
           <td>{{ statistics.mean }}</td>
         </tr>
         <tr>
           <td>Median</td>
+          <td>{{ statistics_total.median }}</td>
           <td>{{ statistics.median }}</td>
         </tr>
         <tr>
           <td>Std Deviation</td>
+          <td>{{ statistics_total.std_deviation }}</td>
           <td>{{ statistics.std_deviation }}</td>
         </tr>
         <tr>
           <td>Correlation</td>
-          <td>{{ statistics.correlation }}</td>
+          <td>{{ statistics_correlation_total }}</td>
+          <td>{{ statistics_correlation }}</td>
         </tr>
         <tr>
           <td>Distribution</td>
+          <td>{{ statistics_total.distribution }}</td>
           <td>{{ statistics.distribution }}</td>
         </tr>
         <tr>
           <td>Image URL</td>
-          <!-- <td>{{ statistics }}</td> -->
+          <td></td>
+          <td></td>
         </tr>
       </table>
     </div>
-    <div class="column">
-      <!-- </div> -->
+  </div>
+  <div class="tile is-parent is-vertical is-6">
+    <div class="tile is-child">
+      Distribution Plot
     </div>
   </div>
 </div>

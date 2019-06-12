@@ -2,8 +2,8 @@
 
 .scrolling-wrapper {
   @include scrollable();
-  overflow-x: auto;
-  overflow-y: auto;
+  overflow-x: scroll;
+  overflow-y: scroll;
   white-space: nowrap;
   height: 450px;
   // background: white;

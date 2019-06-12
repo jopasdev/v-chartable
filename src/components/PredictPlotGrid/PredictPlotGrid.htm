@@ -1,44 +1,45 @@
-<div>
-  <div class="columns">
-    <!-- <div class="container"><h3>Dataset Table</h3></div> -->
-    <div class="column scrolling-wrapper">
-      <div>
-        <table
-          ref="predictTable"
-          class="table is-narrow is-hoverable is-fullwidth"
-        >
-          <!-- <thead>
-          <tr>
-            <td><input type="checkbox" /></td>
-            <td>Header</td>
-          </tr>
-        </thead> -->
-          <tbody>
-            <tr v-for="(line, index) in descriptions">
-              <td>
-                <input
-                  :value="index"
-                  type="checkbox"
-                  @change="selectIndex(index)"
-                  v-model="indices"
-                />
-              </td>
-              <td v-for="feature in line.split(',')">
-                {{ feature }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<div class="tile is-ancestor">
+  <div class="tile is-vertical">
+    <div class="tile">
+      <div class="tile is-parent is-vertical is-6">
+        <div class="tile is-child">
+          <div class="scrolling-wrapper">
+            <table
+              ref="predictTable"
+              class="table is-narrow is-hoverable is-fullwidth is-size-7"
+            >
+              <tbody>
+                <tr v-for="(line, index) in descriptions">
+                  <td>
+                    <input
+                      :value="index"
+                      type="checkbox"
+                      @change="selectIndex(index)"
+                      v-model="indices"
+                    />
+                  </td>
+                  <td v-for="feature in line.split(',')">
+                    {{ feature }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="tile is-parent is-vertical is-6">
+        <div class="tile is-child">
+          <div ref="predictPlot">
+            <!-- Plotly chart will be drawn inside this DIV -->
+          </div>
+        </div>
+        <div class="tile is-child">
+          <button class="button is-primary is-outlined" @click="clearSelection">
+            Clear Selection
+          </button>
+        </div>
       </div>
     </div>
-    <div class="column">
-      <div ref="predictPlot">
-        <!-- Plotly chart will be drawn inside this DIV -->
-      </div>
-      <button class="button is-primary is-outlined" @click="clearSelection">
-        Clear Selection
-      </button>
-    </div>
+    <features :indices="indices"/>
   </div>
-  <features :indices="indices"/>
 </div>
