@@ -20,7 +20,7 @@
   "dependencies": {
     "@statnett/vue-plotly": "^0.3.2",
     "@tensorflow/tfjs": "^1.1.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "core-js": "^2.6.5",
     "jstat": "^1.8.3",
     "lodash": "^4.17.11",
